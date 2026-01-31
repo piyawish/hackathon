@@ -10,6 +10,10 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(process.cwd()));
 
+app.get('/', (req, res) => {
+  res.sendFile(process.cwd() + '/hackathontest.html');
+});
+
 let client;
 
 app.post('/api/analyze', async (req, res) => {
