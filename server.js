@@ -76,6 +76,44 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { messages } = req.body || {};
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: 'Invalid messages' });
+    }
+
+    if (!process.env.OPENAI_API_KEY) {
+      return res.json({ reply: buildLocalChatReply(messages) });
+    }
+
+    if (!client) {
+      client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    }
+
+    const response = await client.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a supportive mental health chat assistant. Use Thai. Be empathetic, avoid diagnosis, and encourage seeking professional help if risk is high.'
+        },
+        ...messages
+      ],
+      temperature: 0.7
+    });
+
+    const reply = response.choices?.[0]?.message?.content || '';
+    return res.json({ reply });
+  } catch (error) {
+    console.error('Chat failed:', error);
+    if (error?.code === 'insufficient_quota') {
+      return res.json({ reply: buildLocalChatReply(req.body?.messages || []) });
+    }
+    return res.status(500).json({ error: error?.message || 'Chat failed' });
+  }
+});
+
 function buildLocalAssessment(answers) {
   const scores = answers.map(a => Number(a.score ?? 0));
   const idx = (n) => scores[n - 1] ?? 0;
@@ -98,6 +136,17 @@ function buildLocalAssessment(answers) {
     risks,
     recommendations: 'หากคุณรู้สึกไม่สบายใจอย่างต่อเนื่อง ควรปรึกษาผู้เชี่ยวชาญด้านสุขภาพจิตเพื่อรับคำแนะนำเพิ่มเติม'
   };
+}
+
+function buildLocalChatReply(messages) {
+  const last = messages[messages.length - 1]?.content || '';
+  if (last.includes('เครียด') || last.includes('กังวล')) {
+    return 'ขอบคุณที่แชร์นะคะ ลองหายใจช้า ๆ ลึก ๆ สัก 3–5 รอบ แล้วบอกฉันได้ไหมว่าอะไรทำให้รู้สึกกังวลที่สุด?';
+  }
+  if (last.includes('เศร้า') || last.includes('หมดหวัง')) {
+    return 'ฉันรับฟังอยู่นะคะ ความรู้สึกเศร้านี้เกิดขึ้นมานานแค่ไหนแล้ว? หากรุนแรงมาก ควรปรึกษาผู้เชี่ยวชาญด้วยนะคะ';
+  }
+  return 'ฉันอยู่ตรงนี้เพื่อรับฟังค่ะ เล่าให้ฉันฟังเพิ่มได้เลยว่ากำลังเผชิญอะไรอยู่ในตอนนี้';
 }
 
 app.listen(port, () => {

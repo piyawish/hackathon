@@ -73,12 +73,8 @@
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
 
-        const replies = [
-            'ขอบคุณที่แชร์นะคะ คุณอยากให้ฉันช่วยเรื่องไหนเป็นพิเศษ?',
-            'ฟังดูเป็นเรื่องหนักมากค่ะ คุณได้พักผ่อนพอไหมในช่วงนี้?',
-            'ถ้าพร้อม ลองเล่าว่าเหตุการณ์ไหนทำให้รู้สึกแบบนี้มากที่สุดได้นะคะ',
-            'ฉันอยู่ตรงนี้เพื่อรับฟัง คุณไม่ได้อยู่คนเดียวนะคะ',
-            'ถ้าความรู้สึกนี้รุนแรงขึ้น ขอแนะนำให้พบผู้เชี่ยวชาญโดยตรงนะคะ'
+        const messages = [
+            { role: 'assistant', content: 'สวัสดีค่ะ ฉันพร้อมรับฟัง คุณอยากเล่าเรื่องอะไรในวันนี้คะ?' }
         ];
 
         function addMessage(text, isUser) {
@@ -92,15 +88,35 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             const text = chatInput.value.trim();
             if (!text) return;
             addMessage(text, true);
+            messages.push({ role: 'user', content: text });
             chatInput.value = '';
-            setTimeout(() => {
-                const reply = replies[Math.floor(Math.random() * replies.length)];
+
+            const typing = document.createElement('div');
+            typing.className = 'flex mb-3';
+            typing.innerHTML = '<div class="bubble-bot rounded-2xl px-4 py-3 max-w-[80%]">กำลังพิมพ์...</div>';
+            chatBox.appendChild(typing);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages })
+                });
+                const data = await res.json();
+                typing.remove();
+                if (!res.ok) throw new Error(data.error || 'Chat error');
+                const reply = data.reply || 'ขอโทษค่ะ ระบบมีปัญหา กรุณาลองใหม่';
                 addMessage(reply, false);
-            }, 600);
+                messages.push({ role: 'assistant', content: reply });
+            } catch (e) {
+                typing.remove();
+                addMessage('ขอโทษค่ะ ระบบมีปัญหา กรุณาลองใหม่', false);
+            }
         }
 
         sendBtn.addEventListener('click', sendMessage);
