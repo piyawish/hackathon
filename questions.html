@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบสอบถามสุขภาพจิต | psyconnect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(1200px 600px at 10% 10%, #e0e7ff 0%, transparent 60%),
+                        radial-gradient(1200px 600px at 90% 0%, #bae6fd 0%, transparent 55%),
+                        linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
+            color: #0f172a;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.04em;
+        }
+        .lux-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12), 0 2px 12px rgba(14, 165, 233, 0.12);
+            border-radius: 2rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .lux-chip {
+            background: linear-gradient(90deg, #e0f2fe 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+        }
+        .lux-btn {
+            background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
+            color: #fff;
+            border-radius: 9999px;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.2s;
+        }
+        .lux-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35);
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 1.25rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        }
+        .option-pill {
+            border: 1px solid #e2e8f0;
+            border-radius: 9999px;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.9rem;
+            color: #334155;
+            transition: all 0.15s ease;
+            background: #f8fafc;
+        }
+        input[type="radio"]:checked + .option-pill {
+            border-color: #38bdf8;
+            color: #0ea5e9;
+            background: #e0f2fe;
+            box-shadow: 0 4px 12px rgba(14,165,233,0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-12 px-6">
+    <div class="max-w-3xl mx-auto lux-card p-10">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-4xl font-bold text-sky-700 mb-2" style="font-family: 'Playfair Display', serif;">แบบสอบถามสุขภาพจิต</h1>
+                <p class="text-slate-500">กรุณาตอบตามความรู้สึกของคุณในช่วง 2 สัปดาห์ที่ผ่านมา</p>
+            </div>
+            <span class="lux-chip text-xs px-3 py-1 rounded-full">psyconnect</span>
+        </div>
+
+        <div class="w-full bg-slate-200 rounded-full h-2 mb-8">
+            <div class="bg-sky-500 h-2 rounded-full w-2/3"></div>
+        </div>
+
+        <form id="assessmentForm" class="w-full flex flex-col gap-6">
+            <div class="question-card">
+                <label class="block text-lg text-slate-700 mb-3">ให้คะแนน 0–3 ตามความถี่ในช่วง 2 สัปดาห์ที่ผ่านมา</label>
+                <div class="flex flex-wrap gap-3">
+                    <span class="option-pill">0 = ไม่เคย</span>
+                    <span class="option-pill">1 = บางครั้ง</span>
+                    <span class="option-pill">2 = บ่อยครั้ง</span>
+                    <span class="option-pill">3 = เกือบตลอดเวลา</span>
+                </div>
+            </div>
+
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">1. ฉันรู้สึกเครียดและผ่อนคลายได้ยาก</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q1" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q1" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q1" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q1" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">2. ฉันมีปากแห้งหรือกระหายน้ำจากความกังวล</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q2" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q2" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q2" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q2" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">3. ฉันรู้สึกเบื่อ ไม่สนุกกับสิ่งที่เคยชอบ</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q3" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q3" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q3" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q3" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">4. ฉันหายใจติดขัดหรือหายใจลำบากจากความกังวล</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q4" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q4" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q4" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q4" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">5. ฉันทำสิ่งต่าง ๆ ได้ยากขึ้นเพราะรู้สึกไร้พลัง</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q5" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q5" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q5" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q5" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">6. ฉันรู้สึกตัวสั่นหรือเหงื่อออกเพราะกังวล</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q6" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q6" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q6" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q6" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">7. ฉันรู้สึกเศร้า หดหู่ หรือสิ้นหวัง</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q7" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q7" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q7" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q7" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">8. ฉันรู้สึกใจสั่นหรือหัวใจเต้นแรงโดยไม่มีสาเหตุชัดเจน</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q8" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q8" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q8" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q8" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">9. ฉันรู้สึกว่าชีวิตไม่มีความหมายหรือเป้าหมาย</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q9" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q9" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q9" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q9" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">10. ฉันรู้สึกกลัวโดยไม่มีเหตุผลชัดเจน</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q10" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q10" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q10" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q10" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">11. ฉันรู้สึกหงุดหงิดหรืออารมณ์เสียง่าย</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q11" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q11" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q11" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q11" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">12. ฉันรู้สึกขาดความมั่นใจในตัวเอง</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q12" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q12" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q12" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q12" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">13. ฉันรู้สึกว่าตัวเองมีคุณค่าต่ำ</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q13" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q13" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q13" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q13" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">14. ฉันรู้สึกตื่นตระหนกหรือหวาดกลัวอย่างฉับพลัน</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q14" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q14" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q14" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q14" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">15. ฉันรู้สึกทำอะไรช้าลงหรือไม่กระตือรือร้นเหมือนเดิม</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q15" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q15" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q15" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q15" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">16. ฉันรู้สึกวิตกกังวลจนยากจะหยุดคิด</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q16" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q16" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q16" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q16" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">17. ฉันรู้สึกว่าความสุขอยู่ไกลจากตัวฉัน</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q17" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q17" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q17" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q17" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">18. ฉันรู้สึกกลัวว่าจะเกิดเหตุไม่ดีขึ้น</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q18" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q18" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q18" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q18" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">19. ฉันรู้สึกหมดแรง เหนื่อยง่าย หรือหมดพลังงาน</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q19" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q19" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q19" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q19" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">20. ฉันรู้สึกกระวนกระวาย อยู่เฉย ๆ ไม่ค่อยได้</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q20" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q20" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q20" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q20" class="hidden"><span class="option-pill">3</span></label></div></div>
+            <div class="question-card"><label class="block text-lg text-slate-700 mb-3">21. ฉันรู้สึกหมดหวังกับอนาคต</label><div class="flex flex-wrap gap-3"><label><input type="radio" name="q21" class="hidden"><span class="option-pill">0</span></label><label><input type="radio" name="q21" class="hidden"><span class="option-pill">1</span></label><label><input type="radio" name="q21" class="hidden"><span class="option-pill">2</span></label><label><input type="radio" name="q21" class="hidden"><span class="option-pill">3</span></label></div></div>
+
+            <div class="question-card">
+                <h3 class="text-lg font-semibold text-slate-700 mb-3">ข้อมูลติดต่อกรณีเร่งด่วน</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" name="emergency_name" placeholder="ชื่อผู้ติดต่อ" class="border border-slate-300 rounded-lg px-4 py-2" required>
+                    <input type="text" name="emergency_relation" placeholder="ความสัมพันธ์" class="border border-slate-300 rounded-lg px-4 py-2" required>
+                    <input type="tel" name="emergency_phone" placeholder="เบอร์โทรศัพท์" class="border border-slate-300 rounded-lg px-4 py-2" required>
+                </div>
+                <p class="text-xs text-slate-400 mt-2">ข้อมูลนี้ใช้เพื่อการติดต่อในกรณีที่ผลประเมินมีความเสี่ยงสูงเท่านั้น และอาจมีการส่ง SMS ไปยังผู้ปกครอง/ผู้ดูแล</p>
+            </div>
+
+            <div class="flex items-center justify-between mt-2">
+                <span class="text-xs text-slate-400">* แบบประเมินนี้เป็นการประเมินเบื้องต้น ไม่ใช่การวินิจฉัย</span>
+                <button type="submit" class="lux-btn px-8 py-3 text-lg">ส่งคำตอบ</button>
+            </div>
+        </form>
+
+        <div id="resultSection" class="mt-10 w-full hidden">
+            <div class="question-card">
+                <h2 class="text-2xl font-semibold text-sky-700 mb-3">ผลการประเมินเบื้องต้น</h2>
+                <div id="resultLoading" class="text-slate-500">กำลังวิเคราะห์...</div>
+                <div id="resultContent" class="hidden">
+                    <p id="resultSummary" class="text-slate-700 mb-4"></p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                            <div class="text-sm text-slate-500">ความเครียด</div>
+                            <div id="riskStress" class="text-lg font-semibold text-sky-700"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                            <div class="text-sm text-slate-500">ความวิตกกังวล</div>
+                            <div id="riskAnxiety" class="text-lg font-semibold text-sky-700"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                            <div class="text-sm text-slate-500">อารมณ์ซึมเศร้า</div>
+                            <div id="riskDepression" class="text-lg font-semibold text-sky-700"></div>
+                        </div>
+                    </div>
+                    <div class="text-slate-700" id="resultAdvice"></div>
+                    <div class="mt-4">
+                        <a href="map.html" class="lux-btn px-6 py-2 inline-block">ดูแผนที่จิตแพทย์ในสงขลา</a>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-4">ผลลัพธ์นี้เป็นการประเมินเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์ หากคุณรู้สึกไม่ปลอดภัยหรือมีความคิดทำร้ายตนเอง โปรดขอความช่วยเหลือจากผู้เชี่ยวชาญทันที</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-xs text-slate-400 text-center">
+            hackathon psu group 3 · <a href="map.html" class="text-sky-600">แผนที่จิตแพทย์สงขลา</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('assessmentForm');
+        const resultSection = document.getElementById('resultSection');
+        const resultLoading = document.getElementById('resultLoading');
+        const resultContent = document.getElementById('resultContent');
+        const resultSummary = document.getElementById('resultSummary');
+        const riskStress = document.getElementById('riskStress');
+        const riskAnxiety = document.getElementById('riskAnxiety');
+        const riskDepression = document.getElementById('riskDepression');
+        const resultAdvice = document.getElementById('resultAdvice');
+
+        const questions = [
+            'ฉันรู้สึกเครียดและผ่อนคลายได้ยาก',
+            'ฉันมีปากแห้งหรือกระหายน้ำจากความกังวล',
+            'ฉันรู้สึกเบื่อ ไม่สนุกกับสิ่งที่เคยชอบ',
+            'ฉันหายใจติดขัดหรือหายใจลำบากจากความกังวล',
+            'ฉันทำสิ่งต่าง ๆ ได้ยากขึ้นเพราะรู้สึกไร้พลัง',
+            'ฉันรู้สึกตัวสั่นหรือเหงื่อออกเพราะกังวล',
+            'ฉันรู้สึกเศร้า หดหู่ หรือสิ้นหวัง',
+            'ฉันรู้สึกใจสั่นหรือหัวใจเต้นแรงโดยไม่มีสาเหตุชัดเจน',
+            'ฉันรู้สึกว่าชีวิตไม่มีความหมายหรือเป้าหมาย',
+            'ฉันรู้สึกกลัวโดยไม่มีเหตุผลชัดเจน',
+            'ฉันรู้สึกหงุดหงิดหรืออารมณ์เสียง่าย',
+            'ฉันรู้สึกขาดความมั่นใจในตัวเอง',
+            'ฉันรู้สึกว่าตัวเองมีคุณค่าต่ำ',
+            'ฉันรู้สึกตื่นตระหนกหรือหวาดกลัวอย่างฉับพลัน',
+            'ฉันรู้สึกทำอะไรช้าลงหรือไม่กระตือรือร้นเหมือนเดิม',
+            'ฉันรู้สึกวิตกกังวลจนยากจะหยุดคิด',
+            'ฉันรู้สึกว่าความสุขอยู่ไกลจากตัวฉัน',
+            'ฉันรู้สึกกลัวว่าจะเกิดเหตุไม่ดีขึ้น',
+            'ฉันรู้สึกหมดแรง เหนื่อยง่าย หรือหมดพลังงาน',
+            'ฉันรู้สึกกระวนกระวาย อยู่เฉย ๆ ไม่ค่อยได้',
+            'ฉันรู้สึกหมดหวังกับอนาคต'
+        ];
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const answers = questions.map((q, i) => {
+                const selected = document.querySelector(`input[name="q${i+1}"]:checked`);
+                return { question: q, score: selected ? Number(selected.nextElementSibling.textContent) : null };
+            });
+
+            if (answers.some(a => a.score === null)) {
+                alert('กรุณาตอบให้ครบทุกข้อ');
+                return;
+            }
+
+            resultSection.classList.remove('hidden');
+            resultLoading.classList.remove('hidden');
+            resultContent.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'AI error');
+
+                resultSummary.textContent = data.summary || '';
+                riskStress.textContent = data.risks?.stress || '';
+                riskAnxiety.textContent = data.risks?.anxiety || '';
+                riskDepression.textContent = data.risks?.depression || '';
+                resultAdvice.textContent = data.recommendations || '';
+
+                resultLoading.classList.add('hidden');
+                resultContent.classList.remove('hidden');
+            } catch (err) {
+                resultLoading.textContent = 'เกิดข้อผิดพลาดในการวิเคราะห์ กรุณาลองใหม่อีกครั้ง';
+            }
+        });
+    </script>
+</body>
+</html>

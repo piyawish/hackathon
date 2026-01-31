@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผนที่จิตแพทย์ | หาดใหญ่</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(1200px 600px at 10% 10%, #e0e7ff 0%, transparent 60%),
+                        radial-gradient(1200px 600px at 90% 0%, #bae6fd 0%, transparent 55%),
+                        linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
+            color: #0f172a;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.04em;
+        }
+        #map {
+            height: 72vh;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12), 0 2px 12px rgba(14, 165, 233, 0.12);
+        }
+        .lux-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        }
+        .badge {
+            background: linear-gradient(90deg, #e0f2fe 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+        }
+        .lux-btn {
+            background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
+            color: #fff;
+            border-radius: 9999px;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.2s;
+        }
+        .lux-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-6">
+    <div class="max-w-6xl mx-auto lux-card p-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+            <div>
+                <h1 class="text-4xl font-bold text-sky-700 mb-2">แผนที่จิตแพทย์อำเภอหาดใหญ่</h1>
+                <p class="text-slate-500">แสดงตำแหน่งตัวอย่างของหน่วยบริการด้านสุขภาพจิตในหาดใหญ่</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="badge text-xs px-3 py-1 rounded-full">Hat Yai • Songkhla</span>
+                <a href="questions.html" class="lux-btn px-5 py-2">กลับไปแบบสอบถาม</a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+                <div id="map"></div>
+            </div>
+            <div class="glass-panel p-5">
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">สถานที่แนะนำ (ตัวอย่าง)</h2>
+                <ul id="locationList" class="space-y-3 text-sm text-slate-600"></ul>
+                <div class="mt-4 text-xs text-slate-400">แตะชื่อสถานที่เพื่อเลื่อนแผนที่</div>
+            </div>
+        </div>
+
+        <div class="mt-6 text-sm text-slate-500">
+            ข้อมูลตำแหน่งเป็นตัวอย่างเบื้องต้น โปรดตรวจสอบเวลาทำการและการให้บริการก่อนเข้ารับบริการจริง
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        const map = L.map('map').setView([7.0066, 100.4767], 12.5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const locations = [
+            { name: 'โรงพยาบาลหาดใหญ่ (ตัวอย่าง)', coords: [7.0084, 100.4767] },
+            { name: 'โรงพยาบาลสงขลานครินทร์ (ตัวอย่าง)', coords: [7.0066, 100.4971] },
+            { name: 'ศูนย์ให้คำปรึกษา ม.อ. (ตัวอย่าง)', coords: [7.0060, 100.5022] },
+            { name: 'คลินิกจิตเวช ใกล้สถานีรถไฟ (ตัวอย่าง)', coords: [7.0069, 100.4711] },
+            { name: 'คลินิกสุขภาพใจ หาดใหญ่ (ตัวอย่าง)', coords: [7.0129, 100.4702] },
+            { name: 'ศูนย์ฟื้นฟูจิตใจ คลองแห (ตัวอย่าง)', coords: [7.0513, 100.4675] },
+            { name: 'คลินิกสุขภาพจิต หาดใหญ่ใน (ตัวอย่าง)', coords: [7.0121, 100.4883] },
+            { name: 'คลินิกจิตแพทย์ ถนนนิพัทธ์ (ตัวอย่าง)', coords: [7.0004, 100.4749] },
+            { name: 'ศูนย์บริการสุขภาพจิต ทุ่งเสา (ตัวอย่าง)', coords: [7.0348, 100.4442] },
+            { name: 'คลินิกสุขภาพใจ คอหงส์ (ตัวอย่าง)', coords: [7.0217, 100.4964] },
+            { name: 'คลินิกจิตแพทย์ หาดใหญ่เหนือ (ตัวอย่าง)', coords: [7.0376, 100.4832] },
+            { name: 'คลินิกสุขภาพจิต รอบเมือง (ตัวอย่าง)', coords: [6.9938, 100.4921] }
+        ];
+
+        const list = document.getElementById('locationList');
+
+        locations.forEach((loc) => {
+            const marker = L.marker(loc.coords).addTo(map).bindPopup(`<strong>${loc.name}</strong>`);
+            const li = document.createElement('li');
+            li.className = 'cursor-pointer hover:text-sky-600';
+            li.textContent = loc.name;
+            li.addEventListener('click', () => {
+                map.setView(loc.coords, 13, { animate: true });
+                marker.openPopup();
+            });
+            list.appendChild(li);
+        });
+    </script>
+</body>
+</html>
