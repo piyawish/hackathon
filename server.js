@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(process.cwd()));
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let client;
 
 app.post('/api/analyze', async (req, res) => {
   try {
@@ -21,6 +21,10 @@ app.post('/api/analyze', async (req, res) => {
 
     if (!process.env.OPENAI_API_KEY) {
       return res.json(buildLocalAssessment(answers));
+    }
+
+    if (!client) {
+      client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     }
 
     const prompt = {
